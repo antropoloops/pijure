@@ -1,0 +1,35 @@
+<configuration scan="true" scanPeriod="1 seconds" debug="false">
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{"yyyy-MM-dd'T'HH:mm:ss,SSS", UTC} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${ROC_LOG_HOME:-logs}/roc.log</file>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>${ROC_LOG_HOME:-logs}/roc.%i.log.zip</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>99</maxIndex>
+    </rollingPolicy>
+
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>20MB</maxFileSize>
+    </triggeringPolicy>
+
+    <encoder>
+      <charset>UTF-8</charset>
+      <pattern>%d{"yyyy-MM-dd'T'HH:mm:ss,SSS", UTC} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.jnativehook" level="WARN"/>
+
+  <root level="WARN">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE"/>
+  </root>
+
+</configuration>
